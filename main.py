@@ -28,15 +28,18 @@ def get_city_location(city_name):
 def getExcel(path):
     input_excel_file = path
     print("🔥 Loading Excel file...")
+    df = pd.read_excel(input_excel_file)
+    count = len(df.index)
+    print(f"✅ Excel file loaded successfully with {count} rows")
     # Load the Excel file into a DataFrame
-    return pd.read_excel(input_excel_file)
+    return df
 
 
 def saveExcel(path, df):
     output_excel_file = path
     # Save the modified DataFrame back to an Excel file
     df.to_excel(output_excel_file, index=False)
-    print("🔥 Excel file saved successfully")
+    print("✅ Excel file saved successfully")
 
 
 def addCoordinates(df):
