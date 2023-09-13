@@ -19,7 +19,7 @@ def get_city_location(city_name):
                 "longitude": location.longitude
             }
         else:
-            return f"Unable to locate {city_name}"
+            return None
 
     except Exception as e:
         return f"Error: {str(e)}"
@@ -48,15 +48,23 @@ def addCoordinates(df):
     for index, row in df.iterrows():
         city_name = row["city"]
         location = get_city_location(city_name)
-        print(
-            f"🍅 {city_name} location: {location} longitude: {location['longitude']} latitude: {location['latitude']}")
-
-        if location:
-            latitudes.append(location["latitude"])
-            longitudes.append(location["longitude"])
+        if location == None:
+            print(f"🍅 {index + 1} 🍅 {city_name} location: None")
+            latitudes.append("None 🍅 XXX")
+            longitudes.append("None 🍅 XXX")
         else:
-            latitudes.append("None XXX")
-            longitudes.append("None XXX")
+            try:
+
+                print(
+                    f"🍅 {index + 1} 🍅 {city_name} location: {location} longitude: {location['longitude']} latitude: {location['latitude']}")
+
+                latitudes.append(location["latitude"])
+                longitudes.append(location["longitude"])
+
+            except Exception as e:
+                print(f"🍅 {index + 1} 🍅 {city_name} Error: {str(e)}")
+                latitudes.append("None 🍅 XXX")
+                longitudes.append("None 🍅 XXX")
 
     df["latitude"] = latitudes
     df["longitude"] = longitudes
